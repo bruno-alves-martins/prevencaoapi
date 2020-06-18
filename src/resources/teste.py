@@ -1,9 +1,12 @@
 from flask import request
 from flask_restful import Resource
+import cx_Oracle
+from flask_jwt_extended import (jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 
 
 class Teste(Resource):
+    @jwt_required
     def get(self):
         """
             Inseres fotos
@@ -35,6 +38,12 @@ class Teste(Resource):
                                 type: string
         """
 
+        con = cx_Oracle.connect('hcb_consulta/hcb_consulta@piodb-scan.pioxii.com.br/hcb')
+  
+                
+        print (con.version)
+
+        a = str(con.version)
 
 
-        return {'hello': 'Teste de Api Prevencao'}
+        return {'oracleversion': a}
