@@ -25,3 +25,7 @@ tornado==4.5.3
 urllib3==1.25.6
 Werkzeug==0.16.0
 cx_Oracle
+flask-jwt-extended
+passlib 
+pandas
+datetime

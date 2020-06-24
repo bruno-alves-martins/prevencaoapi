@@ -1,20 +1,54 @@
 from flask_restful import Resource, reqparse
-from model.userModel import save_to_db, valida_login
+from modelo.userModel import save_to_db, valida_login
 from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 
 parser = reqparse.RequestParser()
+parser.add_argument('username', help = 'This field cannot be blank', required = True)
+parser.add_argument('password', help = 'This field cannot be blank', required = True)
+parser.add_argument('nome')
 
 
 
 class UserRegistration(Resource):
-    
-    parser.add_argument('username', help = 'Campo username nao deve ficar em branco', required = True)
-    parser.add_argument('password', help = 'Campo password nao deve ficar em branco', required = True)
-
 
     def post(self):
+        """
+            Criaçao de usuários
+            ---
+            operationId: resources.UserRegistration.post
+            tags:
+                - CreateUser
+            description: Endpoint para criação de usuarios
+            response:
+                200:
+            parameters:
+                - in: formData
+                  name: nome
+                  description: Nome do Usuário.
+                  required: True
+                  type: string
+                - in: formData
+                  name: username
+                  description: Login do Usuário.
+                  required: True
+                  type: string
+                - in: formData
+                  name: password
+                  description: Senha do usuário.
+                  required: True
+                  type: string
+            responses:
+                200:
+                    schema:
+                        properties:
+                            message:
+                                type: string
+                            
+        """
+    
         data = parser.parse_args()
+   
          
         nome = data['nome']
         username = data['username']
@@ -33,8 +67,7 @@ class UserRegistration(Resource):
 
 
 class UserLogin(Resource):
-    parser.add_argument('username', help = 'Campo username nao deve ficar em branco', required = True)
-    parser.add_argument('password', help = 'Campo password nao deve ficar em branco', required = True)
+
     def post(self):
         data = parser.parse_args()
 
