@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from modelo.mamografiaModel import getProdMmgMensalCC, getProdMmgSemanaCC
+from modelo.mamografiaModel import getProdMmgMensalCC, getProdMmgSemanaCC, getProdMmgMediaDiaSemana, getProdMmgDiariaCC
 from flask import request
 import json
 import locale
@@ -99,6 +99,103 @@ class ProdMmgSemanalCC(Resource):
         centrocusto = json_data['centrocusto']
 
         result = getProdMmgSemanaCC(ano, mes, centrocusto)
+
+        return  { "status": 'success', "result" : result}, 200
+
+
+
+class ProdMmgMediaDiaSemanaCC(Resource):
+    
+    def post(self):
+        """
+            Media de mamografia realizada por dia da semana
+            ---
+            operationId: resources.ProdMmgMensalCC.post
+            tags:
+                - ProducaoMamografiaCentroCusto
+            description: Endpoint retorna a quantidade por mes de mamografia realizada no ano informado e no ano anterior
+            response:
+                200:
+            parameters:
+                - in: text
+                  name: ano1
+                  description: ano atual.
+                  required: True
+                  type: string
+                - in: text
+                  name: ano2
+                  description: ano anterior.
+                  required: True
+                  type: string
+                - in: text
+                  name: centrocusto
+                  description: centro de custo de pesquisa.
+                  required: True
+                  type: string
+            responses:
+                200:
+                    schema:
+                        properties:
+                            status:
+                                type: string
+                            result:
+                                type: string
+        """
+        ret_dict = {}
+        json_data = request.get_json(force=True)
+        print(json_data)
+        ano = json_data['ano']
+        centrocusto = json_data['centrocusto']
+
+        result = getProdMmgMediaDiaSemana(ano, centrocusto)
+
+        return  { "status": 'success', "result" : result}, 200
+
+class ProdMmgDiariaCC(Resource):
+    
+    def post(self):
+        """
+            Busca Mamografias no Ano e no mes por dia
+            ---
+            operationId: resources.ProdMmgMensalCC.post
+            tags:
+                - ProducaoMamografiaCentroCusto
+            description: Endpoint retorna a quantidade por mes de mamografia realizada no ano informado e no ano anterior
+            response:
+                200:
+            parameters:
+                - in: text
+                  name: ano1
+                  description: ano atual.
+                  required: True
+                  type: string
+                - in: text
+                  name: ano2
+                  description: ano anterior.
+                  required: True
+                  type: string
+                - in: text
+                  name: centrocusto
+                  description: centro de custo de pesquisa.
+                  required: True
+                  type: string
+            responses:
+                200:
+                    schema:
+                        properties:
+                            status:
+                                type: string
+                            result:
+                                type: string
+        """
+        ret_dict = {}
+        json_data = request.get_json(force=True)
+        print(json_data)
+        ano = json_data['ano']
+        mes = json_data['mes']
+        centrocusto = json_data['centrocusto']
+
+        result = getProdMmgDiariaCC(ano, mes, centrocusto)
 
         return  { "status": 'success', "result" : result}, 200
 
